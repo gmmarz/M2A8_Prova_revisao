@@ -1,14 +1,51 @@
-from func_compra import adicionar_produtos, ver_lista_compra,calc_total_compra
-from func_auxiliares import continuar_operacao
+from func_compra import(
+    adicionar_produtos,
+    ver_lista_compra,
+    atualizar_produtos
+)
+
+from func_auxiliares import continuar_operacao,calc_total_compra
 
 lst_compra = []
+flg_prog = True
+flg_oper = 0
 
-while True:
-    lst_compra = adicionar_produtos(lst_compra)
+while flg_prog:
+    print('-'*30)    
+    try:
+        print(
+              'Digite a operação desejada:\
+              \n1:Adicionar produto\
+              \n2:Listar itens compra\
+              \n3:Alterar produto\
+              \n4:Remover produto\
+              \n5:Finalizar programa'
+             )
+        flg_oper = int(input('Digite sua opção: '))
+    except ValueError:
+        print('Digitar apenas uma das opções indicadas')
+        flg_oper = 0
+    match flg_oper:
+        case 1:
+            lst_compra = adicionar_produtos(lst_compra)
+        case 2:
+            ver_lista_compra(lst_compra)
+            print('='*10)
+            print(f'Total compra = {calc_total_compra(lst_compra)}')
+        case 3:
+            lst_compra = atualizar_produtos(lst_compra)
+        case 4:
+            pass
+        case 5:
+            print('Lista compra finalizada\n')
+            flg_prog = False
 
-    if not continuar_operacao():
-        break
+if len(lst_compra) == 0:
+    print("Programa abortado")
+else:
+    ver_lista_compra(lst_compra)
+    print('='*10)
+    print(f'Total compra = {calc_total_compra(lst_compra)}')
 
 
-ver_lista_compra(lst_compra)
-print(f'Total compra = {calc_total_compra(lst_compra)}')
+

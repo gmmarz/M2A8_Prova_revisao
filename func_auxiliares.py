@@ -9,13 +9,24 @@ def continuar_operacao()-> bool:
             case _:
                 print('Digite apenas "s" para sim ou "n" para não')
 
-def exite_produto_lista(loc_prod:str, lst_compras:list)->bool:
+def existe_produto_lista(loc_prod:str, lst_compras:list)->bool:
     for item in lst_compras:
         if item['produto'] == loc_prod:
             return True
-    return False   
+    return False
 
-'Recebe a pergunta para o usuário'
+# Recebe nome produto, retorna a posição na lista
+def pegar_produto_posicao_lista(loc_prod:str,lst_compras:list)->int:
+    prod_pos = -1
+    i = 0
+    for item in lst_compras:
+        if item['produto'] == loc_prod:
+            prod_pos = i
+            break
+        i += 1
+    return prod_pos
+
+# 'Recebe a pergunta para o usuário'
 def aquisitar_numeros(pergunta:str):
     valor = 0.0
     flg = False
