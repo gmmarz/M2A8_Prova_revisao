@@ -78,7 +78,7 @@ def atualizar_produtos(lst_compra:list)-> list:
     prod_nome = ''
     flg_chg = True
 
-    prod_nome = input('Digite nome produto para alterar: ')
+    prod_nome = input('Digite nome produto para alterar: ').lower()
     if existe_produto_lista(prod_nome, lst_compra):
         prod_pos = pegar_produto_posicao_lista(prod_nome,lst_compra)
         prod_inf = lst_compra[prod_pos].copy()
@@ -96,20 +96,26 @@ def atualizar_produtos(lst_compra:list)-> list:
                             case 1:
                                 novo_valor = aquisitar_numeros('Digite valor produto: ')
                                 if novo_valor[0] == False:
+                                    print('Atualização de produto abortada')
                                     flg_atualiza = 3
+                                    flg_chg = False
                             case 2:
                                 nova_qte = aquisitar_numeros('Digite a quantidade de produto: ')
                                 if nova_qte[0] == False:
+                                    print('Atualização de produto abortada')
                                     flg_atualiza = 3
+                                    flg_chg = False
                         i +=1
                     elif flg_atualiza == 2:
                         match i:
                             case 0:
                                 novo_nome = prod_nome
                             case 1:
-                                novo_valor = prod_inf['valor']
+                                #Uma tupla pois é o mesmo padrão de retorno da função aquisitar_numeros
+                                novo_valor =(True, prod_inf['valor']) 
                             case 2:
-                                nova_qte = prod_inf['quantidade']
+                                #Uma tupla pois é o mesmo padrão de retorno da função aquisitar_numeros
+                                nova_qte = (True, prod_inf['quantidade'])
                         i +=1
                     elif flg_atualiza == 3:
                         print('Atualização de produto abortada')
@@ -128,9 +134,41 @@ def atualizar_produtos(lst_compra:list)-> list:
             prod_inf.update({'produto': novo_nome,'valor':novo_valor[1],'quantidade':nova_qte[1],'total': novo_total})
             lst_compra[prod_pos] = prod_inf
             return lst_compra
+        elif flg_atualiza == 3:
+            return lst_compra
     else:
         print('Produto desejado não existe na lista, escolha a opção adicionar')
         return lst_compra
 
+def remover_produto(lst_compra:list) -> list:
+    print('-'*30)
+    print('Remover produto')
 
+    prod_nome = ''
+    flg_remove = 0
+    nw_lst = []
+    while flg_remove == 0:
+        prod_nome = input('Digite nome produto para alterar ou (s) para sair: ').lower()
+        if prod_nome == 's':
+            print("Função abortada")
+            flg_remove = -1
+        else:
+            if existe_produto_lista(prod_nome, lst_compra):
+                prod_pos = pegar_produto_posicao_lista(prod_nome,lst_compra)
+                i = 0
+                for item in lst_compra:
+                    if i != prod_pos:
+                        nw_lst.append(lst_compra[i])
+                    i +=1
+                print('*'*30)
+                print(f'Produto {prod_nome} removido')
+                flg_remove = 1
 
+            else:
+                print('Produto não existe na lista')
+                flg_remove = -1
+    if flg_remove == 1:
+        return nw_lst
+    else:
+        return lst_compra
+            

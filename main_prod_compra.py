@@ -1,10 +1,11 @@
 from func_compra import(
     adicionar_produtos,
     ver_lista_compra,
-    atualizar_produtos
+    atualizar_produtos,
+    remover_produto
 )
 
-from func_auxiliares import continuar_operacao,calc_total_compra
+from func_auxiliares import calc_total_compra
 
 lst_compra = []
 flg_prog = True
@@ -35,7 +36,7 @@ while flg_prog:
         case 3:
             lst_compra = atualizar_produtos(lst_compra)
         case 4:
-            pass
+            lst_compra = remover_produto(lst_compra)
         case 5:
             print('Lista compra finalizada\n')
             flg_prog = False
