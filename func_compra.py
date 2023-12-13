@@ -24,7 +24,7 @@ def adicionar_produtos(lst_compra:list)->list:
     while True:
         if flg_nome == 0:
             prod_nome = input('Digite o nome do produto: ').lower()
-            if len(prod_nome)<1:
+            if len(prod_nome)<=1:
                 print('Nome deve conter mais de 1 letra')
                 flg_nome = -1
             else:
@@ -93,6 +93,11 @@ def atualizar_produtos(lst_compra:list)-> list:
                                 novo_nome = input('Digite o nome do produto: ').lower()
                                 if len(novo_nome) < 1:
                                     print('Nome do produto deve ter mais que 1 caracter')
+                                else:
+                                    if existe_produto_lista(novo_nome,lst_compra):
+                                        print(f'Novo nome escolhido já existe na lista.\
+                                              \nNome atual: {lst_compra[prod_pos]["produto"]}   será mantido')
+                                        novo_nome = lst_compra[prod_pos]['produto']
                             case 1:
                                 novo_valor = aquisitar_numeros('Digite valor produto: ')
                                 if novo_valor[0] == False:
